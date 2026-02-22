@@ -79,14 +79,18 @@ pool.getConnection((err, connection) => {
             email VARCHAR(255)
         )`);
 
-        // Criar ou atualizar usuário atendemei
-        const hash = crypto.createHash('sha256').update('CoderMaster#2026').digest('hex');
-        db.get('SELECT * FROM users WHERE username = ?', ['atendemei'], (err, row) => {
+        // Configuração do Usuário Admin a partir do arquivo .env
+        const adminUser = process.env.ADMIN_USER || 'admin';
+        const adminPass = process.env.ADMIN_PASS || 'admin123';
+        const adminEmail = process.env.ADMIN_EMAIL || 'contato@atendemei.com';
+
+        const hash = crypto.createHash('sha256').update(adminPass).digest('hex');
+        db.get('SELECT * FROM users WHERE username = ?', [adminUser], (err, row) => {
             if (!row) {
-                db.run('INSERT INTO users (username, password, email) VALUES (?, ?, ?)', ['atendemei', hash, 'contato@atendemei.com']);
+                db.run('INSERT INTO users (username, password, email) VALUES (?, ?, ?)', [adminUser, hash, adminEmail]);
             } else {
-                // Garante que a senha seja atualizada caso o usuário já exista
-                db.run('UPDATE users SET password = ?, email = ? WHERE username = ?', [hash, 'contato@atendemei.com', 'atendemei']);
+                // Atualiza a senha e email caso a variável de ambiente tenha mudado
+                db.run('UPDATE users SET password = ?, email = ? WHERE username = ?', [hash, adminEmail, adminUser]);
             }
         });
     }
