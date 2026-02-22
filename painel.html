@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Blog | AtendeMEI</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="icone.webp">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Quill.js Theme included -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: var(--bg-light);
+        }
+
+        .panel-header {
+            background: var(--white);
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .panel-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Tabela */
+        .posts-table {
+            width: 100%;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            border-collapse: collapse;
+            overflow: hidden;
+        }
+
+        .posts-table th,
+        .posts-table td {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .posts-table th {
+            background: var(--bg-light);
+            font-weight: 600;
+            color: var(--title-color);
+        }
+
+        .posts-table td.actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-action {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.25rem;
+            color: var(--text-color);
+            transition: var(--transition-fast);
+        }
+
+        .btn-action.edit:hover {
+            color: var(--primary);
+        }
+
+        .btn-action.delete:hover {
+            color: var(--danger);
+        }
+
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 5% auto;
+            padding: 2rem;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 800px;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: var(--font-body);
+        }
+
+        /* Quill Editor override */
+        #editor-container {
+            height: 300px;
+            background: var(--white);
+            font-family: var(--font-body);
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .ql-toolbar.ql-snow {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            background: var(--bg-light);
+            font-family: var(--font-body);
+        }
+
+        .image-preview {
+            max-width: 200px;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="panel-header">
+        <div class="logo">
+            <img src="logo.webp" alt="AtendeMEI" style="height: 35px; margin-right: 8px;">
+        </div>
+        <div>
+            <span style="margin-right:1rem; font-weight:600">Admin</span>
+            <button class="btn btn-outline btn-sm" id="logoutBtn">Sair</button>
+        </div>
+    </header>
+
+    <div class="panel-container">
+        <div class="panel-actions">
+            <h2 style="color:var(--title-color);">Gerenciar Blog</h2>
+            <button class="btn btn-primary" id="newPostBtn">
+                <i class="fa-solid fa-plus" style="margin-right:8px;"></i>
+                Novo Post
+            </button>
+        </div>
+
+        <table class="posts-table">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="postsTableBody">
+                <!-- Posts serão inseridos aqui via JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- The Modal -->
+    <div id="postModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle" style="margin-bottom: 2rem; color:var(--title-color);">Novo Post</h2>
+
+            <form id="postForm" enctype="multipart/form-data">
+                <input type="hidden" id="postId">
+
+                <div class="form-group">
+                    <label for="title">Título do Post</label>
+                    <input type="text" id="title" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="resume">Resumo (Max 150 caracteres)</label>
+                    <input type="text" id="resume" class="form-control" maxlength="150" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="author">Autor</label>
+                    <input type="text" id="author" class="form-control" required value="Equipe AtendeMEI">
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Data de Publicação</label>
+                    <input type="date" id="date" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="image">Imagem de Capa (JPG, PNG)</label>
+                    <input type="file" id="image" class="form-control" accept="image/*">
+                    <img id="imagePreview" class="image-preview" src="" alt="Preview">
+                </div>
+
+                <div class="form-group">
+                    <label for="content">Conteúdo do Post (Editor Visual estilo Word)</label>
+                    <div id="editor-container"></div>
+                </div>
+
+                <button type="submit" class="btn btn-cta w-full" style="border-radius:8px">
+                    Salvar Post
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Quill.js Library -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
+    <script>
+        // Init Quill
+        var quill = new Quill('#editor-container', {
+            theme: 'snow',
+            placeholder: 'Escreva o conteúdo do seu post aqui...',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    [{ 'align': [] }],
+                    ['link', 'image', 'video'],
+                    ['clean']
+                ]
+            }
+        });
+
+        // Check Authentication Middleware Front
+        async function checkAuth() {
+            const res = await fetch('/api/check-auth');
+            const data = await res.json();
+            if (!data.authenticated) {
+                window.location.href = '/login.html';
+            }
+        }
+        checkAuth();
+
+        // Variáveis do Modal
+        const modal = document.getElementById("postModal");
+        const btn = document.getElementById("newPostBtn");
+        const span = document.getElementsByClassName("close")[0];
+        const form = document.getElementById('postForm');
+
+        // Defaults Data Hoje
+        document.getElementById('date').valueAsDate = new Date();
+
+        btn.onclick = function () {
+            form.reset();
+            document.getElementById('postId').value = '';
+            document.getElementById('modalTitle').textContent = 'Novo Post';
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('date').valueAsDate = new Date();
+            quill.root.innerHTML = '';
+            modal.style.display = "block";
+        }
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Preview de Imagem
+        document.getElementById('image').addEventListener('change', function (e) {
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.getElementById('imagePreview');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                }
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+
+        // Carregar Posts
+        async function loadPosts() {
+            try {
+                const response = await fetch('/api/posts');
+                const posts = await response.json();
+
+                const tbody = document.getElementById('postsTableBody');
+                tbody.innerHTML = ''; // Limpar tabela
+
+                posts.forEach(post => {
+                    const tr = document.createElement('tr');
+
+                    // Formatar a data (vem como YYYY-MM-DD)
+                    const [year, month, day] = post.date.split('-');
+                    const dataFormatada = `${day}/${month}/${year}`;
+
+                    tr.innerHTML = `
+                        <td>${dataFormatada}</td>
+                        <td style="font-weight:600">${post.title}</td>
+                        <td>${post.author}</td>
+                        <td class="actions">
+                            <button class="btn-action edit" onclick="editPost(${post.id})" title="Editar">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="btn-action delete" onclick="deletePost(${post.id})" title="Excluir">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+            } catch (error) {
+                console.error("Erro ao carregar posts:", error);
+            }
+        }
+
+        loadPosts(); // Chamada inicial
+
+        // Salvar Post (Novo ou Edit)
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData();
+            formData.append('title', document.getElementById('title').value);
+            formData.append('resume', document.getElementById('resume').value);
+            formData.append('author', document.getElementById('author').value);
+            formData.append('date', document.getElementById('date').value);
+
+            const htmlContent = quill.root.innerHTML;
+            if (htmlContent === '<p><br></p>' || !htmlContent.trim()) {
+                alert('O conteúdo do post não pode estar vazio.');
+                return;
+            }
+            formData.append('content', htmlContent);
+
+            const imageFile = document.getElementById('image').files[0];
+            if (imageFile) {
+                formData.append('image', imageFile);
+            }
+
+            const id = document.getElementById('postId').value;
+            const url = id ? `/api/posts/${id}` : '/api/posts';
+            const method = id ? 'PUT' : 'POST';
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    body: formData // Fetch API cuidará do Content-Type multipart
+                });
+
+                if (response.ok) {
+                    modal.style.display = "none";
+                    loadPosts(); // Recarrega a tabela
+                } else {
+                    alert("Erro ao salvar post. Verifique se está autenticado.");
+                }
+            } catch (error) {
+                console.error("Erro no submit:", error);
+            }
+        });
+
+        // Editar Post (Carregar dados no form)
+        window.editPost = async function (id) {
+            try {
+                const response = await fetch(`/api/posts/${id}`);
+                const post = await response.json();
+
+                document.getElementById('postId').value = post.id;
+                document.getElementById('title').value = post.title;
+                document.getElementById('resume').value = post.resume;
+                document.getElementById('author').value = post.author;
+                document.getElementById('date').value = post.date;
+
+                // Setar conteúdo no Quill
+                quill.root.innerHTML = post.content;
+
+                document.getElementById('image').value = ''; // Reset input de arquivo
+
+                if (post.image) {
+                    const img = document.getElementById('imagePreview');
+                    img.src = post.image;
+                    img.style.display = 'block';
+                } else {
+                    document.getElementById('imagePreview').style.display = 'none';
+                }
+
+                document.getElementById('modalTitle').textContent = 'Editar Post';
+                modal.style.display = "block";
+
+            } catch (error) {
+                console.error("Erro ao buscar post p/ edição:", error);
+            }
+        }
+
+        // Excluir Post
+        window.deletePost = async function (id) {
+            if (confirm("Tem certeza que deseja excluir este post permanentemente?")) {
+                try {
+                    const response = await fetch(`/api/posts/${id}`, { method: 'DELETE' });
+                    if (response.ok) {
+                        loadPosts();
+                    } else {
+                        alert("Erro ao excluir. Tente novamente.");
+                    }
+                } catch (error) {
+                    console.error("Erro ao excluir:", error);
+                }
+            }
+        }
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await fetch('/api/logout', { method: 'POST' });
+            window.location.href = '/login.html';
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post | AtendeMEI</title>
+    <meta name="robots" content="index, follow">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="icone.webp">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .post-header {
+            padding: 8rem 0 4rem;
+            position: relative;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(243, 248, 253, 1) 100%);
+            text-align: center;
+        }
+
+        .post-meta {
+            color: var(--text-color);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .post-title {
+            font-size: 2.5rem;
+            color: var(--title-color);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.2;
+        }
+
+        .post-content-section {
+            padding: 4rem 0;
+            background: var(--white);
+        }
+
+        .post-article {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+
+        .post-article img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius-lg);
+            margin: 2rem 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .post-article h2 {
+            font-size: 1.75rem;
+            color: var(--title-color);
+            margin: 2.5rem 0 1rem;
+            font-family: var(--font-heading);
+        }
+
+        .post-article p {
+            margin-bottom: 1.5rem;
+        }
+
+        .post-article a {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: var(--transition-fast);
+        }
+
+        .back-link:hover {
+            color: var(--secondary);
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.webp" alt="AtendeMEI" style="height: 35px; margin-right: 8px;">
+            </a>
+            <nav class="nav-links">
+                <a href="index.html#servicos" class="nav-link">Serviços</a>
+                <a href="index.html#planos" class="nav-link">Planos</a>
+                <a href="index.html#blog" class="nav-link">Blog</a>
+                <a href="index.html#faq" class="nav-link">FAQ</a>
+                <a href="contato.html" class="nav-link">Contato</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="contato.html" class="btn btn-primary btn-sm">Falar Agora</a>
+            </div>
+        </div>
+    </header>
+
+    <div id="loading" style="text-align:center; padding: 12rem 0; font-size: 1.5rem; color: var(--text-color);">
+        Carregando artigo...</div>
+    <div id="errorMsg" style="text-align:center; padding: 12rem 0; color: var(--danger); display:none;">Artigo não
+        encontrado. <br><br> <a href="index.html" class="btn btn-outline">Voltar ao Início</a></div>
+
+    <div id="postContainer" style="display:none;">
+        <header class="post-header">
+            <div class="container">
+                <span class="badge" style="margin-bottom:1rem;">Artigo</span>
+                <div class="post-meta" id="postMeta"></div>
+                <h1 class="post-title" id="postTitle"></h1>
+            </div>
+        </header>
+
+        <section class="post-content-section">
+            <div class="container">
+                <div class="post-article">
+                    <a href="index.html#blog" class="back-link"><i class="fa-solid fa-arrow-left"></i> Voltar para o
+                        Blog</a>
+
+                    <div id="postImageContainer" style="display:none; text-align:center;">
+                        <img id="postImage" src="" alt="Capa do post"
+                            style="max-height: 400px; width: 100%; object-fit: cover;">
+                    </div>
+
+                    <div id="postContent" style="margin-top:2rem;"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Final CTA -->
+    <section class="final-cta" id="contato" style="padding: 4rem 0;">
+        <div class="container text-center animate-on-scroll block">
+            <h2 class="cta-title" style="font-size:2rem; margin-bottom:1rem">Dúvidas sobre esse tema?</h2>
+            <p class="cta-subtitle">Fale com um especialista agora mesmo.</p>
+            <a href="https://wa.me/5547988801665?text=Olá,%20acabei%20de%20ler%20um%20artigo%20no%20blog%20e%20fiquei%20com%20dúvidas."
+                target="_blank" class="btn btn-cta">
+                <i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer Simples -->
+    <footer class="footer" style="padding: 2rem 0">
+        <div class="container text-center">
+            <p style="color:var(--text-color); font-size:0.9rem">&copy; <span id="year"></span> AtendeMEI. Todos os
+                direitos reservados. Feito por <a href="https://codermaster.com.br" target="_blank"
+                    style="color:var(--primary); text-decoration:none; font-weight:600">Coder Master</a>.</p>
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script src="script.js" defer></script>
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const postId = urlParams.get('id');
+
+            if (!postId) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('errorMsg').style.display = 'block';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/posts/${postId}`);
+                if (!response.ok) throw new Error('Post não encontrado');
+
+                const post = await response.json();
+
+                const [year, month, day] = post.date.split('-');
+
+                document.title = `${post.title} | Blog AtendeMEI`;
+                document.getElementById('postMeta').innerHTML = `<i class="fa-regular fa-calendar" style="margin-right:4px"></i> ${day}/${month}/${year} &nbsp; • &nbsp; <i class="fa-regular fa-user" style="margin-right:4px"></i> Por ${post.author}`;
+                document.getElementById('postTitle').textContent = post.title;
+                document.getElementById('postContent').innerHTML = post.content; // Renderiza HTML do DB
+
+                if (post.image) {
+                    document.getElementById('postImage').src = post.image;
+                    document.getElementById('postImageContainer').style.display = 'block';
+                }
+
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('postContainer').style.display = 'block';
+
+            } catch (error) {
+                console.error(error);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+
+</html>

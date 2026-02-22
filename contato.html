@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO Básico -->
+    <meta name="description"
+        content="Entre em contato com a AtendeMEI. Suporte humanizado e ágil para abertura de MEI, declaração anual, eSocial e regularização.">
+    <meta name="keywords"
+        content="contato MEI, suporte MEI, falar com contador especialista, WhatsApp AtendeMEI, eSocial suporte">
+    <meta name="author" content="AtendeMEI">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Redes Sociais -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://atendemei.com.br/contato.html">
+    <meta property="og:title" content="Contato | AtendeMEI">
+    <meta property="og:description"
+        content="Entre em contato com a AtendeMEI. Suporte humanizado e ágil para o seu negócio.">
+    <meta property="og:image" content="https://atendemei.com.br/banner.webp">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contato | AtendeMEI">
+    <meta name="twitter:description"
+        content="Entre em contato com a AtendeMEI. Suporte humanizado e ágil para o seu negócio.">
+    <meta name="twitter:image" content="https://atendemei.com.br/banner.webp">
+
+    <title>Contato | AtendeMEI</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="icone.webp">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* Melhorias no Layout de Contato (estilo Hero + Glassmorphism) */
+        .page-header {
+            padding: 12rem 0 6rem;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(243, 248, 253, 1) 100%);
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+            color: var(--title-color);
+        }
+
+        .page-title span {
+            color: var(--primary);
+        }
+
+        .contact-section {
+            padding: 2rem 0 8rem;
+            margin-top: -4rem;
+            /* Sobrepõe levemente o hero */
+            position: relative;
+            z-index: 10;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 2rem;
+        }
+
+        /* Cartão de Informações Moderno */
+        .contact-info-card {
+            background: var(--title-color);
+            /* Azul noturno para contraste premium */
+            color: var(--white);
+            padding: 3.5rem 2.5rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.03"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z" /%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+        }
+
+        .contact-info-card h3 {
+            color: var(--white);
+            font-size: 2rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-info-list {
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-info-list li {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition-normal);
+        }
+
+        .contact-info-list li:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-info-list i {
+            font-size: 1.75rem;
+            color: var(--secondary);
+            background: rgba(246, 135, 43, 0.15);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .contact-info-list strong {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-info-list p,
+        .contact-info-list a {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .contact-info-list a:hover {
+            color: var(--white);
+        }
+
+        /* Formulário de Contato Glass/Moderno */
+        .contact-form-card {
+            background: var(--white);
+            padding: 3.5rem;
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
+            /* Sombra mais limpa e orgânica */
+        }
+
+        .form-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .form-header h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--title-color);
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--text-color);
+            transition: var(--transition-fast);
+            background: var(--bg-light);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(61, 155, 227, 0.15);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Redes Sociais no Card Azul */
+        .social-box {
+            position: relative;
+            z-index: 2;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-box h4 {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .social-links.dark a {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .social-links.dark a:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        @media (max-width: 900px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-section {
+                margin-top: -2rem;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.webp" alt="AtendeMEI" style="height: 35px; margin-right: 8px;">
+            </a>
+            <nav class="nav-links">
+                <a href="index.html#servicos" class="nav-link">Serviços</a>
+                <a href="index.html#planos" class="nav-link">Planos</a>
+                <a href="index.html#diferenciais" class="nav-link">Diferenciais</a>
+                <a href="index.html#faq" class="nav-link">FAQ</a>
+                <a href="contato.html" class="nav-link">Contato</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="contato.html" class="btn btn-primary btn-sm">Falar Agora</a>
+                <button class="mobile-menu-btn" aria-label="Menu" id="mobile-menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="index.html#servicos" class="mobile-link">Serviços</a>
+            <a href="index.html#planos" class="mobile-link">Planos</a>
+            <a href="index.html#diferenciais" class="mobile-link">Diferenciais</a>
+            <a href="index.html#faq" class="mobile-link">FAQ</a>
+            <a href="contato.html" class="mobile-link">Contato</a>
+            <a href="https://wa.me/5547988801665?text=Olá,%20vim%20pelo%20menu%20do%20site%20e%20gostaria%20de%20falar%20com%20um%20especialista."
+                target="_blank" class="btn btn-primary w-full text-center">Falar no WhatsApp</a>
+        </div>
+    </header>
+
+    <!-- Page Header (Estilo Hero) -->
+    <section class="page-header hero" id="home">
+        <div class="hero-bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+        </div>
+        <div class="container animate-on-scroll">
+            <span class="badge">Fale Conosco</span>
+            <h1 class="page-title">Como podemos <span>ajudar?</span></h1>
+            <p class="section-description" style="max-width: 700px; margin: 0 auto;">Nossa equipe especialista está
+                pronta para tirar suas dúvidas de forma rápida, humanizada e direcionada ao sucesso do seu negócio.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Info Column Premium -->
+                <div class="contact-info-card animate-on-scroll slide-up">
+                    <div class="hero-bg-shapes">
+                        <div class="shape shape-3"
+                            style="width: 300px; height: 300px; top: -100px; right: -50px; background: rgba(255,255,255,0.05);">
+                        </div>
+                    </div>
+                    <h3>Atendimento Ágil</h3>
+                    <ul class="contact-info-list">
+                        <li>
+                            <i class="fa-brands fa-whatsapp"></i>
+                            <div>
+                                <strong>WhatsApp Especialista</strong>
+                                <a href="https://wa.me/5547988801665?text=Olá,%20visualizei%20a%20página%20de%20contato%20e%20quero%20atendimento."
+                                    target="_blank">(47) 98880-1665</a>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope"></i>
+                            <div>
+                                <strong>E-mail Comercial</strong>
+                                <a href="mailto:contato@atendemei.com">contato@atendemei.com</a>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-clock"></i>
+                            <div>
+                                <strong>Horário de Atendimento</strong>
+                                <p>Segunda a Sexta — 09h às 18h</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Endereço</strong>
+                                <p>José Bornhausen 537 - Navegantes - SC</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-id-card"></i>
+                            <div>
+                                <strong>Dados da Empresa</strong>
+                                <p>CNPJ da empresa: 52.323.018/0001-28</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-user-tie"></i>
+                            <div>
+                                <strong>Responsável</strong>
+                                <p>Nome: Jonatas Junkes e CRC: SC-047238/O-2</p>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="social-box">
+                        <h4>Acompanhe as Redes</h4>
+                        <div class="social-links dark">
+                            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Column Premium -->
+                <div class="contact-form-card animate-on-scroll slide-up delay-1">
+                    <div class="form-header">
+                        <h3>Mande sua Mensagem</h3>
+                        <p class="text-color">Preencha o formulário abaixo que entraremos em contato o mais breve
+                            possível.</p>
+                    </div>
+
+                    <form action="enviar_email.php" method="POST">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="nome" class="form-label">Nome Completo</label>
+                                <input type="text" id="nome" name="nome" class="form-control"
+                                    placeholder="Digite seu nome" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="celular" class="form-label">WhatsApp</label>
+                                <input type="tel" id="celular" name="celular" class="form-control"
+                                    placeholder="(00) 00000-0000" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">E-mail</label>
+                            <input type="email" id="email" name="email" class="form-control"
+                                placeholder="seuemail@exemplo.com.br" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="assunto" class="form-label">Assunto</label>
+                            <select id="assunto" name="assunto" class="form-control" required>
+                                <option value="" disabled selected>O que você precisa?</option>
+                                <option value="abertura">Abertura de MEI</option>
+                                <option value="regularizacao">Regularização / Dívidas / DAS</option>
+                                <option value="esocial">Apoio com eSocial (Funcionário)</option>
+                                <option value="duvida">Dúvidas sobre Contabilidade</option>
+                                <option value="outros">Outros motivos</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mensagem" class="form-label">Detalhes da Solicitação</label>
+                            <textarea id="mensagem" name="mensagem" class="form-control"
+                                placeholder="Explique brevemente como podemos ajudar o seu negócio hoje..."
+                                required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-cta w-full" style="border-radius: 12px;">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            Enviar Pedido de Contato
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo footer-logo">
+                        <img src="logo.webp" alt="AtendeMEI" style="height: 35px; margin-right: 8px;">
+                    </a>
+                    <p class="footer-desc">Descomplicando a vida do Microempreendedor Individual com suporte
+                        especializado, ágil e humano.</p>>
+                </div>
+                <div class="footer-links">
+                    <h4>Navegação</h4>
+                    <ul>
+                        <li><a href="index.html#home">Início</a></li>
+                        <li><a href="index.html#servicos">Serviços</a></li>
+                        <li><a href="index.html#planos">Planos</a></li>
+                        <li><a href="index.html#faq">Dúvidas Frequentes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li>
+                            <i class="fa-brands fa-whatsapp"></i>
+                            <a href="https://wa.me/5547988801665?text=Olá,%20estou%20vendo%20o%20rodapé%20da%20página%20de%20contato%20e%20preciso%20de%20ajuda."
+                                target="_blank">(47) 98880-1665</a>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope"></i>
+                            <a href="mailto:contato@atendemei.com">contato@atendemei.com</a>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-map-marker-alt"></i>
+                            <span>Endereço: José Bornhausen 537 - Navegantes - SC</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-id-card"></i>
+                            <span>CNPJ da empresa: 52.323.018/0001-28</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-user-tie"></i>
+                            <span>Nome: Jonatas Junkes e CRC: SC-047238/O-2</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-legal">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 AtendeMEI. Todos os direitos reservados. Feito por <a href="https://codermaster.com.br"
+                        target="_blank" style="color:var(--primary); text-decoration:none; font-weight:600">Coder
+                        Master</a>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/5547988801665?text=Olá,%20vim%20pela%20página%20de%20contato%20e%20tenho%20interesse%20nos%20serviços."
+        target="_blank" class="whatsapp-float" aria-label="Falar no WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Script -->
+    <script src="script.js" defer></script>
+</body>
+
+</html>
