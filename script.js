@@ -113,6 +113,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     const [year, month, day] = post.date.split('-');
                     const dataFormatada = `${day}/${month}/${year}`;
 
+                    // Prevenir XSS escapando as variáveis de texto
+                    const escape = (str) => {
+                        const div = document.createElement('div');
+                        div.textContent = str;
+                        return div.innerHTML;
+                    };
+
+                    const safeTitle = escape(post.title);
+                    const safeResume = escape(post.resume);
+                    const safeAuthor = escape(post.author);
+
                     // Imagem default se não tiver
                     const imgSrc = post.image ? post.image : 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
 
@@ -121,12 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     card.innerHTML = `
                         <div class="blog-card-img-wrapper">
-                            <img src="${imgSrc}" alt="${post.title}" class="blog-card-img">
+                            <img src="${imgSrc}" alt="${safeTitle}" class="blog-card-img">
                         </div>
                         <div class="blog-card-content">
-                            <span class="blog-card-date">${dataFormatada} • Por ${post.author}</span>
-                            <h3 class="blog-card-title">${post.title}</h3>
-                            <p class="blog-card-resume">${post.resume}</p>
+                            <span class="blog-card-date">${dataFormatada} • Por ${safeAuthor}</span>
+                            <h3 class="blog-card-title">${safeTitle}</h3>
+                            <p class="blog-card-resume">${safeResume}</p>
                             <a href="post?id=${post.id}" class="blog-card-link">
                                 Ler artigo completo <i class="fa-solid fa-arrow-right"></i>
                             </a>

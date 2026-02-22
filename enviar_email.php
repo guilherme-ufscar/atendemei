@@ -35,14 +35,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Envio do E-mail (Função nativa do PHP)
     if (mail($para, $assunto, $corpo, $headers)) {
         // Sucesso
-        echo "<script>alert('Obrigado, $nome! Sua mensagem foi enviada com sucesso e em breve entraremos em contato.'); window.location.href='contato.html';</script>";
+        $nomeSafe = json_encode("Obrigado, $nome! Sua mensagem foi enviada com sucesso e em breve entraremos em contato.");
+        echo "<script>alert($nomeSafe); window.location.href='/contato';</script>";
     } else {
         // Erro de Servidor
         echo "<script>alert('Houve um erro no servidor ao tentar enviar a mensagem. Por favor, tente novamente mais tarde ou nos chame no WhatsApp.'); window.history.back();</script>";
     }
 } else {
     // Redirecionar caso alguém acesse o arquivo diretamente pela URL
-    header("Location: contato.html");
+    header("Location: /contato");
     exit;
 }
 ?>
