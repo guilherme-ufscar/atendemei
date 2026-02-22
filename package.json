@@ -2,8 +2,9 @@
   "name": "atendemei-main",
   "version": "1.0.0",
   "description": "Este projeto é a *landing page* oficial da **AtendeMEI**, desenvolvida com foco em alta conversão, confiança e suporte especializado para Microempreendedores Individuais (MEI).",
-  "main": "script.js",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
