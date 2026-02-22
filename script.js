@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="blog-card-date">${dataFormatada} • Por ${post.author}</span>
                             <h3 class="blog-card-title">${post.title}</h3>
                             <p class="blog-card-resume">${post.resume}</p>
-                            <a href="post.html?id=${post.id}" class="blog-card-link">
+                            <a href="post?id=${post.id}" class="blog-card-link">
                                 Ler artigo completo <i class="fa-solid fa-arrow-right"></i>
                             </a>
                         </div>

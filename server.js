@@ -96,7 +96,7 @@ pool.getConnection((err, connection) => {
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname));
+app.use(express.static(__dirname, { extensions: ['html'] }));
 
 // Multer upload (simples, salvando na pasta uploads)
 const multer = require('multer');

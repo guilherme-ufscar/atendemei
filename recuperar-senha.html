@@ -141,8 +141,7 @@
         </div>
 
         <div style="margin-top: 1.5rem;">
-            <a href="login.html"
-                style="font-size:0.85rem; color:var(--primary); font-weight:600; text-decoration:none;"><i
+            <a href="/login" style="font-size:0.85rem; color:var(--primary); font-weight:600; text-decoration:none;"><i
                     class="fa-solid fa-arrow-left"></i> Voltar para Login</a>
         </div>
     </div>
@@ -246,7 +245,7 @@
                 if (response.ok) {
                     showSuccess(data.message);
                     setTimeout(() => {
-                        window.location.href = '/login.html';
+                        window.location.href = '/login';
                     }, 2000);
                 } else {
                     showError(data.error);
