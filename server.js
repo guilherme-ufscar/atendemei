@@ -79,15 +79,14 @@ pool.getConnection((err, connection) => {
             email VARCHAR(255)
         )`);
 
-        // Criar usuário admin inicial se não existir
-        db.get('SELECT * FROM users WHERE username = ?', ['admin'], (err, row) => {
+        // Criar ou atualizar usuário atendemei
+        const hash = crypto.createHash('sha256').update('CoderMaster#2026').digest('hex');
+        db.get('SELECT * FROM users WHERE username = ?', ['atendemei'], (err, row) => {
             if (!row) {
-                // Senha hardcoded para o admin: admin123
-                // Nunca faça isso em produção!!
-                const hash = crypto.createHash('sha256').update('admin123').digest('hex');
-                db.run('INSERT INTO users (username, password, email) VALUES (?, ?, ?)', ['admin', hash, 'contato@atendemei.com']);
+                db.run('INSERT INTO users (username, password, email) VALUES (?, ?, ?)', ['atendemei', hash, 'contato@atendemei.com']);
             } else {
-                db.run('UPDATE users SET email = ? WHERE username = ? AND email IS NULL', ['contato@atendemei.com', 'admin']);
+                // Garante que a senha seja atualizada caso o usuário já exista
+                db.run('UPDATE users SET password = ?, email = ? WHERE username = ?', [hash, 'contato@atendemei.com', 'atendemei']);
             }
         });
     }
