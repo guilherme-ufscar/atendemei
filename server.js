@@ -255,14 +255,14 @@ app.post('/api/forgot-password', async (req, res) => {
         console.log(`\n\n=== ATENÇÃO USUÁRIO ===\nCÓDIGO DE RECUPERAÇÃO PARA O EMAIL ${email}: ${code}\n=======================\n\n`);
 
         try {
-            // Em Produção: Configure suas credenciais SMTP reais aqui abaixo!
+            // Em Produção: Configure suas credenciais SMTP reais no arquivo .env
             const transporter = nodemailer.createTransport({
-                host: "mail.atendemei.com", // EXEMPLO
-                port: 465,
+                host: process.env.SMTP_HOST || "mail.atendemei.com",
+                port: process.env.SMTP_PORT || 465,
                 secure: true,
                 auth: {
-                    user: "contato@atendemei.com", // Seu email real
-                    pass: "SUA_SENHA_DE_EMAIL"     // Sua senha de email real
+                    user: process.env.SMTP_USER || "contato@atendemei.com",
+                    pass: process.env.SMTP_PASS || "SUA_SENHA_DE_EMAIL"
                 }
             });
 
